@@ -4,7 +4,7 @@ using namespace std;
 
 int a[100100];
 
-int upperBound(int v){
+int lowerBound(int v){
     int l = 1, r = n;
 
     while(l < r){
