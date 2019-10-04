@@ -9,27 +9,25 @@ string w;
 string s;
 
 int main(){
-    int l = 0, r =0;
-
     cin >> t >> w ;
 
     s = w + "#" + t;
 
-    int j = 0;
-    for(int i=1; i<s.size(); i++){
-        if(r >= i){
+    int l = 0, r = 0;
+
+    for(int i=1, j=0; i<(int)s.size(); i++){
+        if(r > i){
             j = i - l;
+            Z[i] = min(Z[j], r - l + 1);
+        }
 
-            Z[i] = min(Z[j], r - i + 1);
-        }else{
-            while(i + Z[i] < s.size() && s[Z[i] + i] == s[Z[i]]){
-                Z[i]++;
+        while(i + Z[i] < (int)s.size() && s[i + Z[i]] == s[Z[i]]){
+            Z[i]++;
+        }
 
-                if(i + Z[i] >= r){
-                    l = i;
-                    r = i + Z[i] - 1;
-                }
-            }
+        if(i + Z[i] >= r){
+            l = i;
+            r = i + Z[i] - 1;
         }
     }
 
