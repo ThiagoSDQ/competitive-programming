@@ -18,7 +18,7 @@ int main(){
     for(int i=1, j=0; i<(int)s.size(); i++){
         if(r > i){
             j = i - l;
-            Z[i] = min(Z[j], r - l + 1);
+            Z[i] = min(Z[j], r - i + 1);
         }
 
         while(i + Z[i] < (int)s.size() && s[i + Z[i]] == s[Z[i]]){
