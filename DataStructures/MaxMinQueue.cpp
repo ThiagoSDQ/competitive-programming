@@ -2,7 +2,7 @@
 
 using namespace std;
 
-struct minqueue{
+struct MinQueue{
     stack < pair < int, int > > s1, s2;
 
     void push(int x){
@@ -42,7 +42,7 @@ struct minqueue{
     }
 };
 
-struct maxqueue{
+struct MaxQueue{
     stack < pair < int, int > > s1, s2;
 
     void push(int x){
