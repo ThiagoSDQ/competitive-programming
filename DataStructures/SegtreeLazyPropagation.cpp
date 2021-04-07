@@ -2,8 +2,10 @@
 
 using namespace std;
 
-int segtree[400040];
-int lazy[400040];
+const int MAXN = 100010;
+
+int segtree[4*MAXN];
+int lazy[4*MAXN];
 
 void prop(int no, int i, int f){
     int l = 2 * no, r = 2 * no + 1;

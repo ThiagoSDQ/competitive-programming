@@ -3,6 +3,7 @@
 using namespace std;
 
 int BIT[100010];
+int n;
 
 int sum(int x){
     int soma = 0;

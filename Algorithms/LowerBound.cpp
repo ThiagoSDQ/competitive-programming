@@ -3,6 +3,7 @@
 using namespace std;
 
 int a[100100];
+int n;  
 
 int lowerBound(int v){
     int l = 1, r = n;

@@ -1,10 +1,11 @@
 #include <bits/stdc++.h>
 
-#define INF 0x3f3f3f3f
-
 using namespace std;
 
-pair < int, int> segmax[400040];
+const int INF = 0x3f3f3f3f;
+const int MAXN = 100010;
+
+int seg[4*MAXN];
 
 void update(int no, int i, int f, int v, int p){
     int l = 2*no;
@@ -13,8 +14,7 @@ void update(int no, int i, int f, int v, int p){
     if(p < i || f < p) return;
 
     if(i == f){
-        segmax[no].first = max(segmax[no].first, v);
-        segmax[no].second = p;
+        seg[no] += v;
     
         return ;
     }
@@ -24,20 +24,32 @@ void update(int no, int i, int f, int v, int p){
     update(l, i, m, v, p);
     update(r, m+1, f, v, p);
 
-    segmax[no] = max(segmax[l], segmax[r]);
+    seg[no] = seg[l] + seg[r];
 
     return ;
 }
 
-pair < int, int > queryMax(int no, int i, int f, int a, int b){
+int query(int no, int i, int f, int a, int b){
     int l = 2*no;
     int r = 2*no + 1;
 
-    if(b < i || f < a) return make_pair(0, -1);
+    if(b < i || f < a) return 0;
 
-    if(a <= i && f <= b) return segmax[no];
+    if(a <= i && f <= b) return seg[no];
 
     int m = (i + f)/2;
 
-    return max(queryMax(l, i, m, a, b), queryMax(r, m+1, f, a, b));
+    return query(l, i, m, a, b) + query(r, m+1, f, a, b);
+}
+
+int main(){
+    int v[] = {2, 5, -3, 12, 0, 3, 7, 1};
+    
+    for(int i=0; i<8; i++){
+        update(1, 1, 8, v[i], i+1);
+    }
+
+    cout << query(1, 1, 8, 2, 6) << "\n";
+    
+    return 0;
 }
