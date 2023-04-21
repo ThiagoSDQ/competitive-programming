@@ -2,40 +2,74 @@
 
 using namespace std;
 
-int BLOCK_SIZE;
+#define ll unsigned long long
+#define fi first
+#define se second
+#define mp make_pair
+#define pii pair<int, ll>
 
-struct query_{
+struct query{
     int l, r, id;
 
-    query_(int l_, int r_, int id_){
+    query(int l_, int r_, int id_){
         l = l_;
         r = r_;
         id = id_;
     }
 };
 
-bool ord_query(query_ a, query_ b){
-    if(a.l/BLOCK_SIZE != b.l/BLOCK_SIZE) return a.l/BLOCK_SIZE < b.l/BLOCK_SIZE;
+const int MAXN = 200010;
+const int B = 450;
 
-    return a.r < b.r;
-}
+int n, q;
+ll v[MAXN];
 
-vector < query_ > query;
-
-int main(){
-    int n, q;
+int main() {
+    ios::sync_with_stdio(false); cin.tie(0);
+    
     cin >> n >> q;
 
-    BLOCK_SIZE = sqrt(n);
-
-    for(int i=0; i<q; i++){
-        int l, r;
-        cin >> l >> r;
-
-        query.push_back(query_(l, r, i));
+    for(int i=1; i<=n; i++){
+        cin >> v[i];
     }
 
-    sort(query.begin(), query.end(), ord_query);
+    vector <query> querys;
+    for(int i=0; i<q; i++){
+        int a, b; cin >> a >> b;
+        querys.push_back(query(a, b, i));
+    }
 
-    return 0;
+    sort(querys.begin(), querys.end(), [](query a, query b){
+        int a_ = a.l/B;
+        int b_ = b.l/B;
+        if(a_ != b_) return a_ < b_;
+
+        return a.r < b.r;
+    });
+
+    int total = 0;
+
+    auto add = [&](int x){
+    };
+
+    auto rem = [&](int x){
+    };
+
+    vector <pii> ans;
+
+    int l=0, r=0;
+    for(int i=0; i<q; i++){
+        while(r < querys[i].r) add(v[++r]);
+        while(r > querys[i].r) rem(v[r--]);
+        while(l < querys[i].l) rem(v[l++]);
+        while(l > querys[i].l) add(v[--l]);
+
+        ans.push_back(mp(querys[i].id, total));
+    }
+
+    sort(ans.begin(), ans.end());
+
+    for(int i=0; i<ans.size(); i++){
+        cout << ans[i].se << "\n";
+    }
 }
